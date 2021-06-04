@@ -22,6 +22,7 @@ function renderTable(callback, data, tableTbody){
         var cols = "<td>" + lineNo + "</td>";
         cols += "<td>" + row.name + "</td>";
         cols += "<td class='number'>" + row.age + "</td>";
+        cols += "<td>" + row.department + "</td>";
         cols += "<td>" + row.city + "</td>";
         cols += "<td><button type='button' class='button green edit-btn' data-eid='" + row.id + "'>Edit</button></td>";
         cols += "<td><button type='button' class='button red delete-btn' data-did='" + row.id + "'>Delete</button></td>";
@@ -88,7 +89,7 @@ function showModal(e, data){
 
     document.getElementById("modal").classList.remove("closed");
 
-    var inputs = ["name", "age", "city"];
+    var inputs = ["name", "age", "department", "city"];
     var modalGuts = document.querySelector(".modal-guts");
     var titleElement = document.createElement("H1");
     titleElement.textContent = "Edit Record";
@@ -168,7 +169,7 @@ function getInputElement(elementName, data){
     attrFor.value = elementName;
     labelEl.setAttributeNode(attrFor);
     labelEl.textContent = elementName.charAt(0).toUpperCase() + elementName.slice(1);
-    if(elementName === "name" || elementName === "age"){
+    if(elementName === "name" || elementName === "age" || elementName === "department"){
         var starRedSpan = document.createElement("SPAN");
         attrClass = document.createAttribute("class");
         attrClass.value = "star-red";
@@ -214,8 +215,9 @@ function saveData(parentClassName, eid){
     var name = document.querySelector("."+ parentClassName +" input.name").value;
     var city = document.querySelector("."+ parentClassName +" input.city").value;
     var age = document.querySelector("."+ parentClassName +" input.age").value;
+    var department = document.querySelector("."+ parentClassName +" input.department").value;
 
-    var bodyData = {sname: name, sage: age, scity: city}
+    var bodyData = {sname: name, sage: age, scity: city, sdepartment: department}
     var apiEndpoint = apiUrl + 'api/insert.php'
     var methodName = "POST";
     if(eid){
@@ -238,6 +240,7 @@ function saveData(parentClassName, eid){
             document.querySelector("."+ parentClassName +" input.name").value = "";
             document.querySelector("."+ parentClassName +" input.city").value = "";
             document.querySelector("."+ parentClassName +" input.age").value = "";
+            document.querySelector("."+ parentClassName +" input.department").value = "";
             toastr.success(response.message);
             hideModal();
         }else{

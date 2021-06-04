@@ -8,9 +8,10 @@ $search = strtolower(urldecode($_GET["search"]));
 
 require_once "../config.php";
 
-$sql = "SELECT * FROM `students` WHERE LOWER(`name`) LIKE :search OR ";
-$sql .= "LOWER(`city`) LIKE :search OR ";
-$sql .= "LOWER(`age`) LIKE :search";
+$sql = "SELECT * FROM students WHERE LOWER(name) LIKE :search OR ";
+$sql .= "LOWER(city) LIKE :search OR ";
+$sql .= "LOWER(department) LIKE :search OR ";
+$sql .= "LOWER(age) LIKE :search";
 $statement = $connection->prepare($sql);
 $statement->execute(array(':search' => "%".$search."%"));
 $results = $statement->fetchAll(PDO::FETCH_ASSOC);

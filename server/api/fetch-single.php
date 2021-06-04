@@ -8,7 +8,7 @@ $studentId = $data["sid"];
 
 require_once "../config.php";
 
-$sql = "SELECT * FROM `students` WHERE `id` = :id";
+$sql = "SELECT * FROM students WHERE id = :id";
 $statement = $connection->prepare($sql);
 $statement->execute(array(':id' => $studentId));
 $results = $statement->fetch(PDO::FETCH_ASSOC);

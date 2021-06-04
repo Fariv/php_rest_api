@@ -6,11 +6,12 @@ header('Access-Control-Allow-Methods: GET');
 require_once "../config.php";
 $search = trim(strip_tags(strtolower(urldecode(@$_GET["search"]))));
 $params = null;
-$sql = "SELECT * FROM `students`";
+$sql = "SELECT * FROM students";
 if(!is_null($search) && strlen($search) > 0){
-    $sql .= "WHERE (LOWER(`name`) LIKE :search OR ";
-    $sql .= "LOWER(`city`) LIKE :search OR ";
-    $sql .= "LOWER(`age`) LIKE :search);";
+    $sql .= "WHERE (LOWER(name) LIKE :search OR ";
+    $sql .= "LOWER(city) LIKE :search OR ";
+    $sql .= "LOWER(department) LIKE :search OR ";
+    $sql .= "LOWER(age) LIKE :search);";
     $params = array(':search' => "%".$search."%");
 }
 $statement = $connection->prepare($sql);

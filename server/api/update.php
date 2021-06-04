@@ -12,17 +12,19 @@ $sid = trim(strip_tags($data["sid"]));
 $sname = trim(strip_tags($data["sname"]));
 $scity = trim(strip_tags($data["scity"]));
 $sage = trim(strip_tags($data["sage"]));
+$sdepartment = trim(strip_tags($data["sdepartment"]));
 
-if(strlen($sname)>0 && strlen($sage)>0){
+if(strlen($sname)>0 && strlen($sage)>0 && strlen($sdepartment)>0){
 
-    $sql = "UPDATE `students` SET `name` = :name, `city` = :city, `age` = :age";
-    $sql .= " WHERE `id` = :id";
+    $sql = "UPDATE students SET name = :name, city = :city, age = :age, department = :department";
+    $sql .= " WHERE id = :id";
     
     $statement = $connection->prepare($sql);
     $parameters = array(
         ":name" => $sname,
         ":city" => $scity,
         ":age" => $sage,
+        ":department" => $sdepartment,
         ":id" => $sid,
     );
     if($statement->execute($parameters) && $statement->rowCount()){
@@ -36,6 +38,8 @@ if(strlen($sname)>0 && strlen($sage)>0){
     $message = "Age field value is mandatory";
     if(strlen($sname)==0){
         $message = "Name field value is mandatory";
+    }else if(strlen($sdepartment)==0){
+        $message = "Department field value is mandatory";
     }
     $response = array("status" => 0, "message" => $message);
     echo json_encode($response);

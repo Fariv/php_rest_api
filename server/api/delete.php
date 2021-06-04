@@ -9,7 +9,7 @@ $studentId = $data["sid"];
 
 require_once "../config.php";
 
-$sql = "DELETE FROM `students` WHERE `id` = :id";
+$sql = "DELETE FROM students WHERE id = :id";
 $statement = $connection->prepare($sql);
 $query = $statement->execute(array(":id" => $studentId));
 if($query && $statement->rowCount()){
